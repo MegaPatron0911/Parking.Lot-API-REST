@@ -51,6 +51,10 @@ class Usuario {
     const [rows] = await pool.promise().query('SELECT * FROM usuario WHERE id_usuario = ?', [id_usuario]);
     return rows[0];
   }
+  static async getByNumeroDocumento(numero_documento) {
+    const [rows] = await pool.promise().query('SELECT * FROM usuario WHERE numero_documento = ?', [numero_documento]);
+    return rows[0];
+  }
   static async create(data) {
     const [result] = await pool.promise().query('INSERT INTO usuario SET ?', [data]);
     return result.insertId;

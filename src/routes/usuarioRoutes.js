@@ -11,9 +11,22 @@ router.get('/', async (req, res) => {
   }
 });
 
+
+// Buscar usuario por id_usuario
 router.get('/:id_usuario', async (req, res) => {
   try {
     const data = await Usuario.getById(req.params.id_usuario);
+    if (data) res.json(data);
+    else res.status(404).json({ error: 'No encontrado' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Buscar usuario por número de documento
+router.get('/documento/:numero_documento', async (req, res) => {
+  try {
+    const data = await Usuario.getByNumeroDocumento(req.params.numero_documento);
     if (data) res.json(data);
     else res.status(404).json({ error: 'No encontrado' });
   } catch (err) {
