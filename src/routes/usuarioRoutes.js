@@ -34,6 +34,13 @@ router.get('/documento/:numero_documento', async (req, res) => {
   }
 });
 
+
+// Buscar usuario por correo electrónico (protegido con JWT)
+const authMiddleware = require('../middleware/authMiddleware');
+const { getUserByEmail } = require('../controllers/userController');
+router.get('/correo/:direccion_correo', authMiddleware, getUserByEmail);
+
+
 router.post('/', async (req, res) => {
   try {
     const id = await Usuario.create(req.body);

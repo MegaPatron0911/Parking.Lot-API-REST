@@ -1,18 +1,21 @@
+
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const { getUserByEmail } = require('../models/Usuario');
+const Usuario = require('../models/Usuario');
 
 exports.login = async (req, res) => {
   const { email, password } = req.body;
   try {
-    const user = await getUserByEmail(email);
+    const user = await Usuario.getUserByEmail(email);
     if (!user) return res.status(401).json({ message: 'Usuario no encontrado' });
 
-    const validPassword = await bcrypt.compare(password, user.password);
+    // El campo correcto es 'clave' en la base de datos
+    const validPassword = await bcrypt.compare(password, user.clave);
     if (!validPassword) return res.status(401).json({ message: 'Contraseña incorrecta' });
 
+    // Puedes ajustar los campos del payload según tu modelo
     const token = jwt.sign(
-      { id: user.id, role: user.role }, 
+      { id: user.id_usuario, perfil: user.PERFIL_USUARIO_id },
       process.env.JWT_SECRET,
       { expiresIn: '8h' }
     );

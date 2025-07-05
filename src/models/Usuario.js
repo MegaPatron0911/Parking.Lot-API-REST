@@ -55,9 +55,9 @@ class Usuario {
     const [rows] = await pool.promise().query('SELECT * FROM usuario WHERE numero_documento = ?', [numero_documento]);
     return rows[0];
   }
-  static async getUserByEmail(direccion_correo){
-    const [rows] = await pool.promise().querry('SELECT * FROM `usuario` WHERE direccion_correo = ?'[direccion_correo]);
-    return row[0];
+  static async getUserByEmail(direccion_correo) {
+    const [rows] = await pool.promise().query('SELECT * FROM usuario WHERE direccion_correo = ?', [direccion_correo]);
+    return rows[0];
   }
   static async create(data) {
     const [result] = await pool.promise().query('INSERT INTO usuario SET ?', [data]);
